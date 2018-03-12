@@ -13,10 +13,11 @@ class Woocommerce_Custom_My_Account_Endpoint {
 		$this->name = trim($name);
 		$this->title = trim($title);
 
-		// Install
-		register_activation_hook( __FILE__, [ $this, 'flush_rewrite_rules'] );
-		
+		// Install TODO
+		//register_activation_hook( plugin_basename( __FILE__ ), [ $this, 'flush_rewrite_rules'] );
+
 		add_action( 'woocommerce_account_' . $this->name . '_endpoint', [ $this, 'endpoint_content'] );
+		
 		$this->connect();
 	}
 	
@@ -81,7 +82,7 @@ class Woocommerce_Custom_My_Account_Endpoint {
 		
 		$current_page = empty( $_current_page ) ? 1 : absint( $_current_page );
 		$name = $this->name;
-		
+
 		if ( is_callable( [ $this, $name ] ) ) { $this->$name( $current_page ); }
 		else {
 			$this->no_content( $current_page );
@@ -109,7 +110,10 @@ class Woocommerce_Custom_My_Account_Endpoint {
 		<p>
 			<?php esc_html_e( 'No method with content defined. Please define '); ?>
 			<code><?php  esc_html_e( static::class . '::' . $this->name ); ?></code>
-			<?php esc_html_e( ' method in a child class.' ); ?>
+			<?php 
+			esc_html_e( ' method' ); 
+			esc_html_e( (self::class === static::class ) ? ' in a child class.' : '.' ) ; 
+			?>
 		</p>
 	<?php }
 }
