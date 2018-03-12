@@ -109,7 +109,7 @@ class Woocommerce_Custom_My_Account_Endpoint {
 		<p>
 			<?php esc_html_e( 'No method with content defined. Please define '); ?>
 			<code><?php  esc_html_e( static::class . '::' . $this->name ); ?></code>
-			<?php esc_html_e( ' method.' ); ?>
+			<?php esc_html_e( ' method in a child class.' ); ?>
 		</p>
 	<?php }
 }
