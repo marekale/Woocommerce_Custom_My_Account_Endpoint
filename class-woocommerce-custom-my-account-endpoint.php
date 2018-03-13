@@ -15,7 +15,9 @@ class Woocommerce_Custom_My_Account_Endpoint {
 		$this->title = trim($title);
 
 		// Install
-		register_activation_hook( $GLOBALS['plugin'], [ $this, 'flush_rewrite_rules'] );
+		if ( isset( $GLOBALS['plugin'] ) ) {
+			register_activation_hook( $GLOBALS['plugin'], [ $this, 'flush_rewrite_rules'] );
+		}
 
 		add_action( 'woocommerce_account_' . $this->name . '_endpoint', [ $this, 'endpoint_content'] );
 		
@@ -29,8 +31,8 @@ class Woocommerce_Custom_My_Account_Endpoint {
 
 		// Flush Permalinks
 		if ( !has_action( 'shutdown', 'flush_rewrite_rules' ) ) {
-                    add_action( 'shutdown', 'flush_rewrite_rules' );
-                }
+			add_action( 'shutdown', 'flush_rewrite_rules' );
+		}
 	}
 	
 	public function init_wpaction() {
